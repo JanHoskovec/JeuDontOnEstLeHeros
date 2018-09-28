@@ -28,13 +28,11 @@ namespace JeuDontOnEstLeHeros.Tests
             Assert.IsNotNull(para);
         }
 
-    //    [TestMethod]
-    //    public void TestSendsParagraphes()
-    //    {
-    //        ParagrapheDataLayer layer = new ParagrapheDataLayer();
-    //        Assert.IsNotNull(layer.GetAll());
-    //        // I'd love to check for the type instead, but it doesn't seem to work very well
-    //        //Assert.IsInstanceOfType(myList[0], typeof(Paragraphe));
-    //    }
+        [TestMethod]
+        public void TestSendsParagraphes()
+        {
+            ParagrapheDataLayer layer = new ParagrapheDataLayer();
+            Assert.IsInstanceOfType(layer.GetAll()[0], typeof(Paragraphe));
+        }
     }
 }
