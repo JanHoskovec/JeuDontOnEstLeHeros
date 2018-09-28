@@ -4,30 +4,25 @@
     ViewBag.Title = "One";
 }
 
-<h2>One</h2>
+<h2>@Html.DisplayFor(model=> model.Id)</h2>
 
 <div>
-    <h4>Paragraphe</h4>
+    <h4>Connecté(e) en tant que @Session["Pseudo"]</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Contenu)
-        </dt>
 
-        <dd>
+        <p>
             @Html.DisplayFor(model => model.Contenu)
-        </dd>
-
-    </dl>
-    <p>
-        @ViewBag.Question.Contenu
-    </p>
-    <ul>
-        @foreach(var r in ViewBag.Reponses)
-        {
-          <li>
-             <a href="@r.NextParagraphId">@r.Contenu</a>
-          </li>
-        }
-    </ul>
+        </p>
+        <p>
+            @ViewBag.Question.Contenu
+        </p>
+        <ul>
+            @foreach (var r in ViewBag.Reponses)
+            {
+                <li>
+                    <a href="@r.NextParagraphId">@r.Contenu</a>
+                </li>
+            }
+        </ul>
+    
 </div>
