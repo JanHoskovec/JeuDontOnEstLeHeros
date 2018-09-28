@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="JeuDontOnEstLeHerosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Avatar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Surnom" Type="varchar(max)" Nullable="false" />
+          <Property Name="Sexe" Type="bit" Nullable="false" />
+          <Property Name="EspeceId" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Espece">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Paragraphe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Contenu" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Contenu" Type="varchar(max)" Nullable="false" />
+          <Property Name="ParagrapheId" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reponse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Contenu" Type="varchar(max)" Nullable="false" />
+          <Property Name="QuestionId" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="NextParagraphId" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <Association Name="FK_Avatar_Espece">
+          <End Role="Espece" Type="Self.Espece" Multiplicity="1" />
+          <End Role="Avatar" Type="Self.Avatar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Espece">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Avatar">
+              <PropertyRef Name="EspeceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_Paragraphe">
+          <End Role="Paragraphe" Type="Self.Paragraphe" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paragraphe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="ParagrapheId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reponse_Paragraphe">
+          <End Role="Paragraphe" Type="Self.Paragraphe" Multiplicity="0..1" />
+          <End Role="Reponse" Type="Self.Reponse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paragraphe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reponse">
+              <PropertyRef Name="NextParagraphId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reponse_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="Reponse" Type="Self.Reponse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reponse">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="JeuDontOnEstLeHerosModelStoreContainer">
+          <EntitySet Name="Avatar" EntityType="Self.Avatar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Espece" EntityType="Self.Espece" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Paragraphe" EntityType="Self.Paragraphe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reponse" EntityType="Self.Reponse" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Avatar_Espece" Association="Self.FK_Avatar_Espece">
+            <End Role="Espece" EntitySet="Espece" />
+            <End Role="Avatar" EntitySet="Avatar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_Paragraphe" Association="Self.FK_Question_Paragraphe">
+            <End Role="Paragraphe" EntitySet="Paragraphe" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reponse_Paragraphe" Association="Self.FK_Reponse_Paragraphe">
+            <End Role="Paragraphe" EntitySet="Paragraphe" />
+            <End Role="Reponse" EntitySet="Reponse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reponse_Question" Association="Self.FK_Reponse_Question">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Reponse" EntitySet="Reponse" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="JeuDontOnEstLeHerosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Avatar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Surnom" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Sexe" Type="Boolean" Nullable="false" />
+          <Property Name="EspeceId" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Espece" Relationship="Self.FK_Avatar_Espece" FromRole="Avatar" ToRole="Espece" />
+        </EntityType>
+        <EntityType Name="Espece">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Avatar" Relationship="Self.FK_Avatar_Espece" FromRole="Espece" ToRole="Avatar" />
+        </EntityType>
+        <EntityType Name="Paragraphe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Contenu" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_Question_Paragraphe" FromRole="Paragraphe" ToRole="Question" />
+          <NavigationProperty Name="Reponse" Relationship="Self.FK_Reponse_Paragraphe" FromRole="Paragraphe" ToRole="Reponse" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Contenu" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ParagrapheId" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Paragraphe" Relationship="Self.FK_Question_Paragraphe" FromRole="Question" ToRole="Paragraphe" />
+          <NavigationProperty Name="Reponse" Relationship="Self.FK_Reponse_Question" FromRole="Question" ToRole="Reponse" />
+        </EntityType>
+        <EntityType Name="Reponse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Contenu" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QuestionId" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="NextParagraphId" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Paragraphe" Relationship="Self.FK_Reponse_Paragraphe" FromRole="Reponse" ToRole="Paragraphe" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_Reponse_Question" FromRole="Reponse" ToRole="Question" />
+        </EntityType>
+        <Association Name="FK_Avatar_Espece">
+          <End Role="Espece" Type="Self.Espece" Multiplicity="1" />
+          <End Role="Avatar" Type="Self.Avatar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Espece">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Avatar">
+              <PropertyRef Name="EspeceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_Paragraphe">
+          <End Role="Paragraphe" Type="Self.Paragraphe" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paragraphe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="ParagrapheId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reponse_Paragraphe">
+          <End Role="Paragraphe" Type="Self.Paragraphe" Multiplicity="0..1" />
+          <End Role="Reponse" Type="Self.Reponse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paragraphe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reponse">
+              <PropertyRef Name="NextParagraphId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reponse_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="Reponse" Type="Self.Reponse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reponse">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="JeuDontOnEstLeHerosEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Avatar" EntityType="Self.Avatar" />
+          <EntitySet Name="Espece" EntityType="Self.Espece" />
+          <EntitySet Name="Paragraphe" EntityType="Self.Paragraphe" />
+          <EntitySet Name="Question" EntityType="Self.Question" />
+          <EntitySet Name="Reponse" EntityType="Self.Reponse" />
+          <AssociationSet Name="FK_Avatar_Espece" Association="Self.FK_Avatar_Espece">
+            <End Role="Espece" EntitySet="Espece" />
+            <End Role="Avatar" EntitySet="Avatar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_Paragraphe" Association="Self.FK_Question_Paragraphe">
+            <End Role="Paragraphe" EntitySet="Paragraphe" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reponse_Paragraphe" Association="Self.FK_Reponse_Paragraphe">
+            <End Role="Paragraphe" EntitySet="Paragraphe" />
+            <End Role="Reponse" EntitySet="Reponse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reponse_Question" Association="Self.FK_Reponse_Question">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Reponse" EntitySet="Reponse" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="JeuDontOnEstLeHerosModelStoreContainer" CdmEntityContainer="JeuDontOnEstLeHerosEntities">
+          <EntitySetMapping Name="Avatar">
+            <EntityTypeMapping TypeName="JeuDontOnEstLeHerosModel.Avatar">
+              <MappingFragment StoreEntitySet="Avatar">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Surnom" ColumnName="Surnom" />
+                <ScalarProperty Name="Sexe" ColumnName="Sexe" />
+                <ScalarProperty Name="EspeceId" ColumnName="EspeceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Espece">
+            <EntityTypeMapping TypeName="JeuDontOnEstLeHerosModel.Espece">
+              <MappingFragment StoreEntitySet="Espece">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Paragraphe">
+            <EntityTypeMapping TypeName="JeuDontOnEstLeHerosModel.Paragraphe">
+              <MappingFragment StoreEntitySet="Paragraphe">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Contenu" ColumnName="Contenu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Question">
+            <EntityTypeMapping TypeName="JeuDontOnEstLeHerosModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Contenu" ColumnName="Contenu" />
+                <ScalarProperty Name="ParagrapheId" ColumnName="ParagrapheId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reponse">
+            <EntityTypeMapping TypeName="JeuDontOnEstLeHerosModel.Reponse">
+              <MappingFragment StoreEntitySet="Reponse">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Contenu" ColumnName="Contenu" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="NextParagraphId" ColumnName="NextParagraphId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
