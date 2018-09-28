@@ -202,8 +202,10 @@
     <Content Include="Views\Paragraphe\One.cshtml" />
     <Content Include="Views\Home\CreateAvatar.cshtml" />
     <Content Include="Views\Home\SelectAvatar.cshtml" />
-    <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <None Include="Web.Recette.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -39,7 +39,6 @@ namespace JeuDontOnEstLeHeros.Web.UI.Controllers
             ViewBag.Options = this.AvailableSpecies();
             aLayer.Save(avatar);
             Session["Avatar"] = avatar;
-            Session["Pseudo"] = avatar.Surnom;
             return RedirectToRoute(new { Controller = "Paragraphe", Action = "One", id = "1" });
         }
 
@@ -50,7 +49,7 @@ namespace JeuDontOnEstLeHeros.Web.UI.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return View("Index");
         }
 
         public ActionResult Login()
@@ -70,7 +69,6 @@ namespace JeuDontOnEstLeHeros.Web.UI.Controllers
             {
                 Avatar avatar = aLayer.GetOne(select.Id);
                 Session["Avatar"] = avatar;
-                Session["Pseudo"] = avatar.Surnom;
                 return RedirectToRoute(new { Controller = "Paragraphe", Action = "One", id = "1" });
 
             }
